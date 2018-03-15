@@ -1,0 +1,95 @@
+homeassistant:
+  name: !secret homeassistant_name
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: 555
+  unit_system: metric
+  time_zone: Europe/Berlin
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+  javascript_version: latest
+
+# Enables configuration UI
+config:
+
+http:
+  api_password: !secret http_password
+  base_url: !secret http_url
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor: !include sensor.yaml
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+device_tracker: !include device_tracker.yaml
+
+# Philips Hue
+hue:
+  bridges:
+    - host: 192.168.2.105
+
+# Homekit
+homekit:
+  pincode: !secret homekit_pincode
+
+# Netatmo
+netatmo:
+  api_key: !secret netatmo_api_key
+  secret_key: !secret netatmo_secret_key
+  username: !secret netatmo_username
+  password: !secret netatmo_password
+
+# Xiaomi Mi Robot
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.2.109
+    token: !secret xiaomi_token
+
+# Denon and Sony
+media_player:
+  - platform: denonavr
+    host: 192.168.2.124
+    name: Denon AVR-X2200W
+    show_all_sources: True
+  - platform: braviatv
+    host: 192.168.2.107
+
+# Apple TV
+apple_tv:
+  - host: 192.168.2.114
+    login_id: !secret apple_tv_login_id
+    name: AppleTV
+    start_off: true
+    credentials: !secret apple_tv_credentials
