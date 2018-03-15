@@ -1,0 +1,1 @@
+# Thorstens Home Assistant Configuration
