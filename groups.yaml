@@ -33,17 +33,19 @@ Geräte:
   icon: mdi:laptop-mac
   name: Geräte
   entities:
-   - group.fritzbox
-   - group.vacuum
+    - group.fritzbox
+    - group.vacuum
 
-Synology:
+Netzwerk:
   view: Yes
   icon: mdi:server-network
   entities:
-  - group.synology_cpus_status
-  - group.synology_network_status
-  - group.synology_memory_status
-  - group.synology_disk_status
+    - group.internet
+    - group.synology_cpus_status
+    - group.synology_network_status
+    - group.synology_memory_status
+    - group.synology_disk_status
+
 
 Umwelt:
     - sensor.netatmo_modul_temperature
@@ -84,7 +86,6 @@ Entertainment:
     - media_player.sony_bravia_tv
     - media_player.denon_avrx2200w
 
-
 Synology CPUs Status:
   - sensor.cpu_load_total
   - sensor.cpu_load_user
@@ -121,6 +122,10 @@ Synology Disk Status:
 Fritzbox:
   entities:
     - sensor.fritz_netmonitor
+
+Internet:
+  entities:
+    - sensor.speedtest
 
 Lights:
   entities:

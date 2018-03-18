@@ -27,3 +27,12 @@
     - volume_size_total
     - volume_size_used
     - volume_percentage_used
+
+- platform: speedtest
+  minute:
+    - 0
+    - 30
+  monitored_conditions:
+    - ping
+    - download
+    - upload
