@@ -3,7 +3,7 @@ default_view:
   view: yes
   entities:
     - group.family
-    - group.umwelt
+    - group.wetter
     - group.vacuum
     - media_player.denon_avrx2200w
 
@@ -46,12 +46,12 @@ Netzwerk:
     - group.synology_memory_status
     - group.synology_disk_status
 
-
-Umwelt:
+Wetter:
     - sensor.netatmo_modul_temperature
     - sensor.netatmo_modul_humidity
     - sensor.netatmo_regenmesser_rain
     - sensor.netatmo_windmesser_angle
+    - sensor.netatmo_windmesser_strength
     - sensor.netatmo_w_temperature
     - sensor.netatmo_w_humidity
 
@@ -125,7 +125,9 @@ Fritzbox:
 
 Internet:
   entities:
-    - sensor.speedtest
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
 
 Lights:
   entities:

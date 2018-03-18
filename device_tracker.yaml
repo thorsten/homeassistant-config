@@ -12,3 +12,8 @@
   host: 192.168.2.103
   username: !secret unifi_username
   password: !secret unifi_password
+
+- platform: icloud
+  username: !secret icloud_username
+  password: !secret icloud_password
+  account_name: !secret icloud_accountname
