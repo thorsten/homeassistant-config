@@ -2,3 +2,13 @@
   host: 192.168.2.1
   username: !secret fritz_user
   password: !secret fritz_pwd
+
+- platform: unifi_direct
+  host: 192.168.2.100
+  username: !secret unifi_username
+  password: !secret unifi_password
+
+- platform: unifi_direct
+  host: 192.168.2.103
+  username: !secret unifi_username
+  password: !secret unifi_password

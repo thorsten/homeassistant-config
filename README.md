@@ -11,6 +11,7 @@
 - [Denon AVR-X2200W](https://www.denon.de/de/product/homecinema/avreceiver/avrx2200w)
 - [Netatmo Weatherstation](https://www.netatmo.com/) with rain gauge and wind gauge
 - Xiaomi Mi Robot
+- [Ubiquiti Networks Unifi 802.11ac Pro](https://www.ubnt.com/unifi/unifi-ap-ac-pro/)
 - Amazon Echo Dot (not integrated yet)
 
 # Automations
