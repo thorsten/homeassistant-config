@@ -1,0 +1,109 @@
+- id: '1611321895081'
+  alias: Lichtband verdunkeln, wenn TV startet
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 1c315e81ae5ad4d89d3dae8bb18266a9
+    entity_id: remote.harmony_hub
+    domain: remote
+  condition: []
+  action:
+  - device_id: f6a46131261b47572c946d46bf8f409e
+    domain: cover
+    entity_id: cover.lichtband
+    type: set_tilt_position
+    position: 0
+  mode: single
+- id: '1612011356234'
+  alias: Die Post war da!
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_17
+  condition: []
+  action:
+  - service: notify.mobile_app_thorstens_iphone
+    data:
+      title: Die Post war da!
+      message: Schau mal lieber nach!
+  - service: notify.mobile_app_sabrinas_iphone
+    data:
+      title: Die Post war da!
+      message: Dein lieber Mann holt sie dir!
+  - service: notify.mobile_app_imac
+    data:
+      title: Die Post war da!
+      message: Schau mal lieber nach!
+  mode: single
+- id: '1629648815872'
+  alias: Low battery level detection & notification for all battery sensors
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      actions:
+      - service: notify.mobile_app_thorstens_iphone
+        data:
+          message: Akkustand kontrollieren
+- id: '1629649019529'
+  alias: Temperatur über 30°
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.multi_sensor_buro
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.netatmo_hermann_hesse_strasse_esszimmer_linas_zimmer_temperature
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.netatmo_hermann_hesse_strasse_esszimmer_noras_zimmer_temperature
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.netatmo_hermann_hesse_strasse_esszimmer_schlafzimmer_temperature
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.netatmo_hermann_hesse_strasse_esszimmer_temperature
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.temperature_11
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.temperature_5
+    above: '30'
+  - platform: numeric_state
+    entity_id: sensor.temperature_8
+    above: '30'
+  condition: []
+  action:
+  - service: notify.mobile_app_thorstens_iphone
+    data:
+      message: Temperatur über 30°
+      title: Warnung Temperatur
+  - service: notify.mobile_app_sabrinas_iphone
+    data:
+      message: Temperatur über 30°
+      title: Warnung Temperatur
+  mode: single
+- id: '1630005640307'
+  alias: Home Assistant update notification
+  description: ''
+  use_blueprint:
+    path: Klumper/update_notification.yaml
+    input:
+      notification_message: Home Assistant {{ newest_version }} is available
+      delay: 0
+      updater: binary_sensor.updater
+      notification_title: Upgrade time!
+      notify_device: d5c798a8e1ae62352b90e273988ad1c6
+- id: '1630005729011'
+  alias: Synology update notification
+  description: ''
+  use_blueprint:
+    path: Klumper/update_notification.yaml
+    input:
+      notification_message: Eine neue Synology Version ist verfügbar.
+      delay: 0
+      updater: binary_sensor.phobos_update_available
+      notify_device: d5c798a8e1ae62352b90e273988ad1c6
+      notification_title: Upgrade time!

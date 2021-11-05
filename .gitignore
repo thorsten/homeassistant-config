@@ -1,0 +1,19 @@
+# Folder
+.storage/
+blueprints/
+custom_components/
+node-red/
+themes/
+tts/
+www/
+
+# Files
+.HA_VERSION
+secrets.yaml
+harmony_*.conf
+
+# SQLite
+home-assistant_v2.*
+
+# Logs
+home-assistant.log*

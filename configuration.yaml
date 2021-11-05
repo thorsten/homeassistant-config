@@ -1,0 +1,542 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Let's Encrypt
+http:
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+# Netatmo
+netatmo:
+  client_id: !secret netatmo_api_key
+  client_secret: !secret netatmo_secret_key
+
+# OctoPrint
+octoprint:
+  host: 192.168.2.150
+  api_key: !secret octoprint_api_key
+
+# Media Players
+media_player:
+  - platform: soundtouch
+    host: 192.168.2.117
+    port: 8090
+    name: Badezimmer
+
+# Modbus
+modbus:
+  - type: tcp
+    host: 192.168.2.147 # Stiebel Eltron LWZ 304 Trend
+    port: 502
+    name: "lwz"
+    close_comm_on_error: true
+    delay: 5
+    timeout: 5
+    sensors:
+      # Room temperature
+      - name: "LWZ RAUMISTTEMP-HK1"
+        slave: 1
+        address: 1
+        input_type: input
+        unit_of_measurement: "°C"
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ RAUMTEMP-TAG"
+        slave: 1
+        address: 1001
+        input_type: holding
+        unit_of_measurement: "°C"
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      # Heating
+      - name: "LWZ BETRIEBSART"
+        slave: 1
+        address: 1000
+        input_type: holding
+      - name: "LWZ AUSSENTEMPERATUR"
+        slave: 1
+        address: 6
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ ISTWERT-HK1"
+        slave: 1
+        address: 7
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ SOLLWERT-HK1"
+        slave: 1
+        address: 8
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ VORLAUFTEMP"
+        slave: 1
+        address: 11
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ RUECKLAUFTEMP"
+        slave: 1
+        address: 12
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ DRUCK-HEIZKREIS"
+        slave: 1
+        address: 13
+        input_type: input
+        unit_of_measurement: bar
+        device_class: pressure
+        scale: 0.1
+        precision: 1
+      - name: "LWZ VOLUMENSTROM"
+        slave: 1
+        address: 14
+        input_type: input
+        unit_of_measurement: l/min
+        scale: 0.1
+        precision: 1
+      # Water
+      - name: "LWZ WW-ISTTEMP"
+        slave: 1
+        address: 15
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ WW-SOLLTEMP"
+        slave: 1
+        address: 16
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ WW-SOLL-TAG"
+        slave: 1
+        address: 1011
+        input_type: holding
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      # Air
+      - name: "LWZ ZULUFT-IST-LUEFTERDREHZAHL"
+        slave: 1
+        address: 17
+        input_type: input
+        unit_of_measurement: Hz
+      - name: "LWZ ZULUFT-SOLL-VOLUMENSTROM"
+        slave: 1
+        address: 18
+        input_type: input
+        unit_of_measurement: m³/h
+      - name: "LWZ ABLUFT-IST-LUEFTERDREHZAHL"
+        slave: 1
+        address: 19
+        input_type: input
+        unit_of_measurement: Hz
+      - name: "LWZ ABLUFT-SOLL-VOLUMENSTROM"
+        slave: 1
+        address: 20
+        input_type: input
+        unit_of_measurement: m³/h
+      - name: "LWZ ABLUFTFEUCHTE"
+        slave: 1
+        address: 21
+        input_type: input
+        unit_of_measurement: "%"
+        device_class: humidity
+      - name: "LWZ ABLUFTTEMPERATUR"
+        slave: 1
+        address: 22
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ ABLUFTTAUPUNKT"
+        slave: 1
+        address: 23
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ STUFE-TAG"
+        slave: 1
+        address: 1017
+        input_type: holding
+      - name: "LWZ STUFE-NACHT"
+        slave: 1
+        address: 1018
+        input_type: holding
+      # Process values
+      - name: "LWZ HEISSGASTEMP"
+        slave: 1
+        address: 27
+        input_type: input
+        unit_of_measurement: °C
+        device_class: temperature
+        scale: 0.1
+        precision: 1
+      - name: "LWZ HOCHDRUCK"
+        slave: 1
+        address: 28
+        input_type: input
+        unit_of_measurement: bar
+        device_class: pressure
+        scale: 0.01
+        precision: 2
+      - name: "LWZ NIEDERDRUCK"
+        slave: 1
+        address: 29
+        input_type: input
+        unit_of_measurement: bar
+        device_class: pressure
+        scale: 0.01
+        precision: 2
+      # Heat quantity
+      - name: "LWZ WM-HEIZEN-TAG"
+        slave: 1
+        address: 3000
+        input_type: input
+        unit_of_measurement: kWh
+      - name: "LWZ WM-HEIZEN-SUMME MWh"
+        slave: 1
+        address: 3002
+        input_type: input
+        unit_of_measurement: MWh
+        device_class: energy
+      - name: "LWZ WM-HEIZEN-SUMME kWh"
+        slave: 1
+        address: 3001
+        input_type: input
+      - name: "LWZ WM-WW-TAG"
+        slave: 1
+        address: 3003
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      - name: "LWZ WM-WW-SUMME MWh"
+        slave: 1
+        address: 3005
+        input_type: input
+        unit_of_measurement: MWh
+      - name: "LWZ WM-WW-SUMME kWh"
+        slave: 1
+        address: 3004
+        input_type: input
+        unit_of_measurement: kWh
+      - name: "LWZ WM-NE-HEIZEN-SUMME MWh"
+        slave: 1
+        address: 3007
+        input_type: input
+        unit_of_measurement: MWh
+      - name: "LWZ WM-NE-HEIZEN-SUMME kWh"
+        slave: 1
+        address: 3006
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      - name: "LWZ WM-NE-WW-SUMME MWh"
+        slave: 1
+        address: 3009
+        input_type: input
+        unit_of_measurement: MWh
+        device_class: energy
+      - name: "LWZ WM-NE-WW-SUMME kWh"
+        slave: 1
+        address: 3008
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: power
+      - name: "LWZ WM-WRG-TAG"
+        slave: 1
+        address: 3010
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      - name: "LWZ WM-WRG-SUMME MWh"
+        slave: 1
+        address: 3012
+        input_type: input
+        unit_of_measurement: MWh
+        device_class: energy
+      - name: "LWZ WM-WRG-SUMME kWh"
+        slave: 1
+        address: 3011
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      # Power consumption
+      - name: "LWZ P-HEIZUNG-TAG"
+        slave: 1
+        address: 3021
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      - name: "LWZ P-HEIZUNG-SUMME MWh"
+        slave: 1
+        address: 3023
+        input_type: input
+        unit_of_measurement: MWh
+        device_class: energy
+      - name: "LWZ P-HEIZUNG-SUMME kWh"
+        slave: 1
+        address: 3022
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      - name: "LWZ P-WW-TAG"
+        slave: 1
+        address: 3024
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      - name: "LWZ P-WW-SUMME MWh"
+        slave: 1
+        address: 3026
+        input_type: input
+        unit_of_measurement: MWh
+        device_class: energy
+      - name: "LWZ P-WW-SUMME kWh"
+        slave: 1
+        address: 3025
+        input_type: input
+        unit_of_measurement: kWh
+        device_class: energy
+      # Running times
+      - name: "LWZ VERDICHTER-HEIZEN"
+        slave: 1
+        address: 3027
+        input_type: input
+        unit_of_measurement: h
+      - name: "LWZ VERDICHTER-WW"
+        slave: 1
+        address: 3029
+        input_type: input
+        unit_of_measurement: h
+      - name: "LWZ ELEKTR-NE-HEIZEN"
+        slave: 1
+        address: 3030
+        input_type: input
+        unit_of_measurement: h
+      - name: "LWZ ELEKTR-NE-WW"
+        slave: 1
+        address: 3031
+        input_type: input
+        unit_of_measurement: h
+      # Betriebsstatus
+      - name: "LWZ BETRIEBSSTATUS"
+        address: 2000
+        slave: 1
+        count: 1
+        input_type: input
+        data_type: uint16
+
+  - type: tcp
+    host: 192.168.2.155 # SMA TriPower
+    port: 502
+    name: "sma"
+    close_comm_on_error: true
+    delay: 5
+    timeout: 5
+    sensors:
+      - name: PV_Status
+        data_type: int32
+        unit_of_measurement: "status"
+        slave: 3
+        address: 30201
+        count: 2
+      - name: PV_Gesamtertrag
+        unit_of_measurement: "kWh"
+        slave: 3
+        address: 30531
+        input_type: input
+        count: 2
+      - name: PV_Leistung
+        unit_of_measurement: "W"
+        slave: 3
+        address: 30775
+        input_type: input
+        count: 2
+      - name: PV_Tagesertrag
+        unit_of_measurement: "Wh"
+        slave: 3
+        address: 30517
+        count: 4
+        data_type: int
+      - name: Netzverbrauch
+        slave: 3
+        address: 30865
+        unit_of_measurement: "W"
+        count: 2
+        data_type: uint
+      - name: PV_Temperatur
+        data_type: int32
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        slave: 3
+        address: 30953
+        count: 2
+        scale: 0.1
+      - name: PV_Spannung
+        data_type: int32
+        device_class: "voltage"
+        unit_of_measurement: "V"
+        slave: 3
+        address: 30783
+        count: 2
+        scale: 0.01
+        precision: 2
+      - name: PV_Frequenz
+        data_type: int32
+        unit_of_measurement: "Hz"
+        slave: 3
+        address: 30803
+        count: 2
+        scale: 0.01
+        precision: 2
+
+  - type: tcp
+    host: 192.168.2.157 # SMA Data Manager M
+    port: 502
+    name: "sma-data-manager"
+    close_comm_on_error: true
+    delay: 5
+    timeout: 5
+    sensors:
+      - name: PV_Leistung_aktuell
+        unit_of_measurement: "W"
+        slave: 3
+        address: 30775
+        input_type: input
+        count: 2
+
+stiebel_eltron:
+  name: "LWZ 304 Trend"
+  hub: lwz
+
+# Sensors
+sensor:
+  - platform: integration
+    source: sensor.netzverbrauch
+    name: energy_spent
+    unit_prefix: k
+    round: 2
+
+# Templates
+template:
+  - sensor:
+      - name: "pv_status_template"
+        state: "{% if is_state('sensor.PV_Status', '35') %} Fault
+          {% elif is_state('sensor.PV_Status', '303') %} Off
+          {% elif is_state('sensor.PV_Status', '455') %} Warning
+          {% elif is_state('sensor.PV_Status', '307') %} OK
+          {% else %} Unknown Code
+          {% endif %}"
+      - name: "pv_leistung_template"
+        unit_of_measurement: "W"
+        state: "{% if states('sensor.PV_Leistung') is not none %}
+          {% if states('sensor.PV_Leistung') | int < 0 %}
+          {{ 0 }}
+          {% else %}
+          {{ states('sensor.PV_Leistung') | int }}
+          {% endif %}
+          {% else %}
+          {{ 'error' }}
+          {% endif %}"
+      - name: "pv_temperatur_template"
+        unit_of_measurement: "°C"
+        state: "{% if states('sensor.pv_temperatur') is not none %}
+          {% if states('sensor.pv_temperatur') | int < 0 %}
+          {{ 0 }}
+          {% else %}
+          {{ states('sensor.pv_temperatur') | int }}
+          {% endif %}
+          {% endif %}"
+      - name: "pv_spannung_template"
+        unit_of_measurement: "V"
+        state: "{% if states('sensor.pv_spannung') is not none %}
+          {% if states('sensor.pv_spannung') | float(default=0) < 0 %}
+          {{ 0 }}
+          {% else %}
+          {{ states('sensor.pv_spannung') | float(default=0) }}
+          {% endif %}
+          {% endif %}"
+      - name: "pv_frequenz_template"
+        unit_of_measurement: "Hz"
+        state: "{% if states('sensor.pv_frequenz') is not none %}
+          {% if states('sensor.pv_frequenz') | float(default=0) < 0 %}
+          {{ 0 }}
+          {% else %}
+          {{ states('sensor.pv_frequenz') | float(default=0) }}
+          {% endif %}
+          {% endif %}"
+    binary_sensor:
+      - name: "LWZ Schaltprogramm aktiv"
+        state: "{{ states('sensor.lwz_betriebsstatus')|int|bitwise_and(1) > 0 }}"
+      - name: "LWZ Kompressor aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(2) > 0 }}"
+      - name: "LWZ Heizbetrieb aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(4) > 0 }}"
+      - name: "LWZ WW Bereitung aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(16) > 0 }}"
+      - name: "LWZ elektrische Nacherwärmung aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(32) > 0 }}"
+      - name: "LWZ Service aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(64) > 0 }}"
+      - name: "LWZ EVU Sperre aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(128) > 0 }}"
+      - name: "LWZ Filterwechsel beide Filter"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(256) > 0 }}"
+      - name: "LWZ Lüftung aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(512) > 0 }}"
+      - name: "LWZ Heizkreispumpe aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(1024) > 0 }}"
+      - name: "LWZ Abtauen aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(2048) > 0 }}"
+      - name: "LWZ Filterwechsel Abluft"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(4096) > 0 }}"
+      - name: "LWZ Filterwechsel Zuluft"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(8192) > 0 }}"
+      - name: "LWZ Aufheizprogramm aktiv"
+        state: "{{ states('sensor.lwz404_betriebsstatus')|int|bitwise_and(16384) > 0 }}"
+
+# InfluxDB
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: homeassistant
+  max_retries: 3
+  default_measurement: state

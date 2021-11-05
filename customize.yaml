@@ -1,0 +1,4 @@
+sensor.pv_leistung_template:
+  unit_of_measurement: W
+sensor.pv_leistung:
+  unit_of_measurement: W
