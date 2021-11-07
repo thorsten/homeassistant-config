@@ -1,4 +1,6 @@
-# Thorsten's Homea Assistant Configuration
+# Thorsten's Home Assistant Configuration
+
+The Home Assistant installation is running on a Raspberry Pi 4.
 
 ## Hardware
 
@@ -8,7 +10,7 @@
 * Logitech Harmony Hub
 
 ### Lights / Shutters
-* Philips Hue
+* Philips Hue (2x Lightstrips, 1x Iris, 1x Bloom, 1x Motion Sensor)
 * Elgato Key Light Air
 * Somfy Connexoon with Somfy Open API
 * 11x roller shutters
@@ -20,12 +22,13 @@
 * 6x Xiaomi indoor sensors
 
 ### Office
-* iPhone 12 Pro
-* iPhone SE
-* iPad
-* iPad Pro 10,5"
-* iMac
-* HomePod Mini
+* Apple iPhone 12 Pro
+* Apple iPhone SE
+* Apple iPad
+* Apple iPad Pro 10,5"
+* Apple iMac
+* Apple Watch 6
+* Apple HomePod Mini
 * HP ColorLaserJet MFP
 * Synology DS 916+
 * FRITZ!Box 7590
@@ -42,3 +45,5 @@
 ### Additional hardware
 * ConBee II Zigbee USB Gateway
 * Meross WLAN power adapter
+* PRUSA i3 MK3S+ controlled by OctoPrint on a Raspberry Pi 3B
+* Audi e-tron quattro
