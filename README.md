@@ -16,7 +16,7 @@ The Home Assistant installation is running on a Raspberry Pi 4.
 * 11x roller shutters
 * 3x Raffstores
 
-# Climate
+### Climate
 * Netatmo Weatherstation
 * 3x Netatmo indoor sensor
 * 6x Xiaomi indoor sensors
